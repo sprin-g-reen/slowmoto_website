@@ -3,7 +3,7 @@ import { mockGlobal, mockMotorcycles, mockTours } from "./mock-data";
 
 export function getStrapiURL(path = "") {
   return `${
-    process.env.NEXT_PUBLIC_STRAPI_URL || process.env.STRAPI_URL || "http://localhost:1337"
+    "https://whimsical-badge-f41b91c26a.strapiapp.com/api"
   }${path}`;
 }
 
@@ -21,7 +21,7 @@ export function getStrapiMedia(url: string | null | undefined) {
   return getStrapiURL(url);
 }
 
-const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
+const STRAPI_TOKEN = '0cec9e46c16f27e945bdac58e7ea4bf9db1213d89c58c6bea04412f2a45a84db9ceb44d08e852de33b8f941d0bdf61dd59566d80890e02352e7abc55a5794ebf1f1142af4e522609c526ecc3e36e2de6d75fae4a978f55f44eeec4b8b95d1eb012c65b7b03c40698652ea415fab97d6b30c6aeb053120732ed7a031199b68e9a';
 
 export async function fetchAPI<T>(
   path: string,
