@@ -62,7 +62,7 @@ export async function fetchAPI<T>(
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error(`Fetch API error for ${requestUrl}:`, error);
+    // console.error(`Fetch API error for ${requestUrl}:`, error);
     throw error;
   }
 }
