@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Tour } from '@/lib/types';
+import { getStrapiMedia } from '@/lib/api';
 
 interface TourCardProps {
   tour: Tour;
 }
 
 export default function TourCard({ tour }: TourCardProps) {
-  const imageUrl = tour.featured_image?.data?.attributes?.url || '/placeholder.jpg';
+  const imageUrl = getStrapiMedia(tour.featured_image?.data?.attributes?.url) || '/placeholder.jpg';
 
   return (
     <div className="group bg-white dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-zinc-100 dark:border-zinc-700 flex flex-col h-full">

@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'whimsical-badge-f41b91c26a.media.strapiapp.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'whimsical-badge-f41b91c26a.strapiapp.com',
+      },
     ],
   },
 };

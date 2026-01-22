@@ -2,15 +2,18 @@ import Hero from '@/components/Hero';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import TourCard from '@/components/TourCard';
-import { getTours } from '@/lib/api';
+import { getTours, getGlobalSettings } from '@/lib/api';
 
 export default async function Home() {
-  const tours = await getTours();
+  const [tours, global] = await Promise.all([
+      getTours(),
+      getGlobalSettings()
+  ]);
 
   return (
     <main className="min-h-screen bg-background-light dark:bg-background-dark">
       <Navbar />
-      <Hero />
+      <Hero title={global.siteName} subtitle={global.siteDescription} />
 
       <section className="py-24 px-4 bg-surface-light dark:bg-surface-dark">
         <div className="max-w-7xl mx-auto">
