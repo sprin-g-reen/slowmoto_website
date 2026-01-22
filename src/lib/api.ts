@@ -73,8 +73,9 @@ export async function getGlobalSettings(): Promise<Global> {
       populate: "*",
     }, { next: { revalidate: 60 } });
     // Handle both nested attributes (Strapi v4) and flat structure (Strapi v5)
-    // @ts-expect-error - Handling varying API response structures
-    return res.data?.attributes || res.data || mockGlobal;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = res.data as any;
+    return data?.attributes || data || mockGlobal;
   } catch (e) {
     console.warn("Failed to fetch global settings, falling back to mock.", e);
     return mockGlobal;
@@ -89,8 +90,9 @@ export async function getTours(): Promise<Tour[]> {
     // Strapi response data is an array of objects with id and attributes
     // Handle both nested attributes (Strapi v4) and flat structure (Strapi v5)
     return res.data.map((item) => {
-      // @ts-expect-error - Handling varying API response structures
-      return item.attributes || item;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data = item as any;
+      return data.attributes || data;
     });
   } catch (e) {
     console.warn("Failed to fetch tours, falling back to mock.", e);
@@ -106,8 +108,9 @@ export async function getTourBySlug(slug: string): Promise<Tour | null> {
     }, { next: { revalidate: 60 } });
     const item = res.data[0];
     if (!item) return null;
-    // @ts-expect-error - Handling varying API response structures
-    return item.attributes || item || null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = item as any;
+    return data.attributes || data || null;
   } catch (e) {
     console.warn("Failed to fetch tour by slug, falling back to mock.", e);
     return mockTours.find((t) => t.slug === slug) || null;
