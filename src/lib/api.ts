@@ -3,7 +3,7 @@ import { mockGlobal, mockMotorcycles, mockTours } from "./mock-data";
 
 export function getStrapiURL(path = "") {
   return `${
-    "https://whimsical-badge-f41b91c26a.strapiapp.com/api"
+    "https://whimsical-badge-f41b91c26a.strapiapp.com"
   }${path}`;
 }
 
