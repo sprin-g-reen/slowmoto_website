@@ -1,6 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { getTourBySlug } from '@/lib/api';
+import { getTourBySlug, getStrapiMedia } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 
@@ -16,7 +16,7 @@ export default async function TourDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const imageUrl = tour.featured_image?.data?.attributes?.url || '/placeholder.jpg';
+  const imageUrl = getStrapiMedia(tour.featured_image?.data?.attributes?.url) || '/placeholder.jpg';
 
   return (
     <main className="min-h-screen bg-background-light dark:bg-background-dark">

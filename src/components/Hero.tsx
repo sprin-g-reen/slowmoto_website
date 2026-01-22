@@ -1,6 +1,11 @@
 import Link from 'next/link';
 
-export default function Hero() {
+interface HeroProps {
+  title?: string;
+  subtitle?: string;
+}
+
+export default function Hero({ title, subtitle }: HeroProps) {
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -17,10 +22,10 @@ export default function Hero() {
           Discover Real India
         </span>
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-white mb-8 leading-tight animate-fade-in-up animation-delay-200">
-          Slow Moto Tours
+          {title || "Slow Moto Tours"}
         </h1>
         <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto font-light leading-relaxed animate-fade-in-up animation-delay-400">
-          Guided Royal Enfield motorcycle tours through the breathtaking landscapes of Southern India.
+          {subtitle || "Guided Royal Enfield motorcycle tours through the breathtaking landscapes of Southern India."}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-600">

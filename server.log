@@ -1,0 +1,34 @@
+
+> frontend@0.1.0 start
+> next start
+
+▲ Next.js 16.1.4
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+✓ Ready in 695ms
+Fetch API error for https://whimsical-badge-f41b91c26a.strapiapp.com/api/tours?populate=*: Error: API Error: Forbidden (403)
+    at l (.next/server/chunks/ssr/_6d9a7a86._.js:1:8047)
+    at async n (.next/server/chunks/ssr/_6d9a7a86._.js:1:8419)
+    at async i (.next/server/chunks/ssr/[root-of-the-server]__92607efe._.js:1:4209)
+Failed to fetch tours, falling back to mock. Error: API Error: Forbidden (403)
+    at l (.next/server/chunks/ssr/_6d9a7a86._.js:1:8047)
+    at async n (.next/server/chunks/ssr/_6d9a7a86._.js:1:8419)
+    at async i (.next/server/chunks/ssr/[root-of-the-server]__92607efe._.js:1:4209)
+Fetch API error for https://whimsical-badge-f41b91c26a.strapiapp.com/api/global?populate=*: Error: API Error: Forbidden (403)
+    at l (.next/server/chunks/ssr/_6d9a7a86._.js:1:8047)
+    at async m (.next/server/chunks/ssr/_6d9a7a86._.js:1:8211)
+    at async i (.next/server/chunks/ssr/[root-of-the-server]__92607efe._.js:1:4209)
+Failed to fetch global settings, falling back to mock. Error: API Error: Forbidden (403)
+    at l (.next/server/chunks/ssr/_6d9a7a86._.js:1:8047)
+    at async m (.next/server/chunks/ssr/_6d9a7a86._.js:1:8211)
+    at async i (.next/server/chunks/ssr/[root-of-the-server]__92607efe._.js:1:4209)
+Fetch API error for https://whimsical-badge-f41b91c26a.strapiapp.com/api/tours?populate=*: Error: API Error: Forbidden (403)
+    at l (.next/server/chunks/ssr/_6d9a7a86._.js:1:8047)
+    at async n (.next/server/chunks/ssr/_6d9a7a86._.js:1:8419)
+    at async g (.next/server/chunks/ssr/[root-of-the-server]__2c8d1fca._.js:1:2427)
+Failed to fetch tours, falling back to mock. Error: API Error: Forbidden (403)
+    at l (.next/server/chunks/ssr/_6d9a7a86._.js:1:8047)
+    at async n (.next/server/chunks/ssr/_6d9a7a86._.js:1:8419)
+    at async g (.next/server/chunks/ssr/[root-of-the-server]__2c8d1fca._.js:1:2427)
