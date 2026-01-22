@@ -25,7 +25,7 @@ const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
 
 export async function fetchAPI<T>(
   path: string,
-  urlParamsObject: Record<string, any> = {},
+  urlParamsObject: Record<string, string | number | boolean | null | undefined> = {},
   options: RequestInit = {}
 ): Promise<T> {
   // Merge default and user options
@@ -44,7 +44,8 @@ export async function fetchAPI<T>(
 
   // Build query string
   const queryString = Object.keys(urlParamsObject)
-    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(urlParamsObject[key])}`)
+    .filter((key) => urlParamsObject[key] != null)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(String(urlParamsObject[key]))}`)
     .join("&");
 
   const requestUrl = getStrapiURL(
