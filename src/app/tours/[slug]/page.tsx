@@ -16,7 +16,7 @@ export default async function TourDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const imageUrl = getStrapiMedia(tour.featured_image?.data?.attributes?.url) || '/placeholder.jpg';
+  const imageUrl = getStrapiMedia(tour.featured_image?.data?.attributes?.url) || 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80';
 
   return (
     <main className="min-h-screen bg-background-light dark:bg-background-dark">

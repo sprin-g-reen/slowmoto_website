@@ -8,7 +8,8 @@ interface TourCardProps {
 }
 
 export default function TourCard({ tour }: TourCardProps) {
-  const imageUrl = getStrapiMedia(tour.featured_image?.data?.attributes?.url) || '/placeholder.jpg';
+  // Use a reliable external placeholder if image is missing
+  const imageUrl = getStrapiMedia(tour.featured_image?.data?.attributes?.url) || 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
 
   return (
     <div className="group bg-white dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-zinc-100 dark:border-zinc-700 flex flex-col h-full">
