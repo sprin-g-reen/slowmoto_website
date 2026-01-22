@@ -77,7 +77,7 @@ export async function getGlobalSettings(): Promise<Global> {
     const data = res.data as any;
     return data?.attributes || data || mockGlobal;
   } catch (e) {
-    console.warn("Failed to fetch global settings, falling back to mock.", e);
+    console.warn("Failed to fetch global settings, falling back to mock.", e instanceof Error ? e.message : e);
     return mockGlobal;
   }
 }
@@ -95,7 +95,7 @@ export async function getTours(): Promise<Tour[]> {
       return data.attributes || data;
     });
   } catch (e) {
-    console.warn("Failed to fetch tours, falling back to mock.", e);
+    console.warn("Failed to fetch tours, falling back to mock.", e instanceof Error ? e.message : e);
     return mockTours;
   }
 }
@@ -112,7 +112,7 @@ export async function getTourBySlug(slug: string): Promise<Tour | null> {
     const data = item as any;
     return data.attributes || data || null;
   } catch (e) {
-    console.warn("Failed to fetch tour by slug, falling back to mock.", e);
+    console.warn("Failed to fetch tour by slug, falling back to mock.", e instanceof Error ? e.message : e);
     return mockTours.find((t) => t.slug === slug) || null;
   }
 }
