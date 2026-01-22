@@ -72,7 +72,9 @@ export async function getGlobalSettings(): Promise<Global> {
     const res = await fetchAPI<StrapiSingleResponse<Global>>("/global", {
       populate: "*",
     }, { next: { revalidate: 60 } });
-    return res.data?.attributes || mockGlobal;
+    // Handle both nested attributes (Strapi v4) and flat structure (Strapi v5)
+    // @ts-expect-error - Handling varying API response structures
+    return res.data?.attributes || res.data || mockGlobal;
   } catch (e) {
     console.warn("Failed to fetch global settings, falling back to mock.", e);
     return mockGlobal;
@@ -85,7 +87,11 @@ export async function getTours(): Promise<Tour[]> {
       populate: "*",
     }, { next: { revalidate: 60 } });
     // Strapi response data is an array of objects with id and attributes
-    return res.data.map((item) => item.attributes);
+    // Handle both nested attributes (Strapi v4) and flat structure (Strapi v5)
+    return res.data.map((item) => {
+      // @ts-expect-error - Handling varying API response structures
+      return item.attributes || item;
+    });
   } catch (e) {
     console.warn("Failed to fetch tours, falling back to mock.", e);
     return mockTours;
@@ -98,7 +104,10 @@ export async function getTourBySlug(slug: string): Promise<Tour | null> {
       "filters[slug][$eq]": slug,
       populate: "*",
     }, { next: { revalidate: 60 } });
-    return res.data[0]?.attributes || null;
+    const item = res.data[0];
+    if (!item) return null;
+    // @ts-expect-error - Handling varying API response structures
+    return item.attributes || item || null;
   } catch (e) {
     console.warn("Failed to fetch tour by slug, falling back to mock.", e);
     return mockTours.find((t) => t.slug === slug) || null;
