@@ -1,9 +1,16 @@
-import { Global, Motorcycle, StrapiResponse, Tour, StrapiSingleResponse } from "./types";
+import { Global, Motorcycle, Tour } from "./types";
 import { mockGlobal, mockMotorcycles, mockTours } from "./mock-data";
+
+// Helper type to handle both flattened (Strapi v5/plugin) and nested (Strapi v4) response structures
+type StrapiItem<T> = T & { attributes?: T };
+type StrapiResponse<T> = {
+  data: StrapiItem<T>[] | StrapiItem<T> | null;
+  meta?: unknown;
+};
 
 export function getStrapiURL(path = "") {
   return `${
-    process.env.NEXT_PUBLIC_STRAPI_URL || process.env.STRAPI_URL || "http://localhost:1337"
+    process.env.NEXT_PUBLIC_STRAPI_URL || process.env.STRAPI_URL || "https://whimsical-badge-f41b91c26a.strapiapp.com"
   }${path}`;
 }
 
@@ -21,7 +28,8 @@ export function getStrapiMedia(url: string | null | undefined) {
   return getStrapiURL(url);
 }
 
-const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
+// Fallback token provided for build fix; in production, use environment variables.
+const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN || "0cec9e46c16f27e945bdac58e7ea4bf9db1213d89c58c6bea04412f2a45a84db9ceb44d08e852de33b8f941d0bdf61dd59566d80890e02352e7abc55a5794ebf1f1142af4e522609c526ecc3e36e2de6d75fae4a978f55f44eeec4b8b95d1eb012c65b7b03c40698652ea415fab97d6b30c6aeb053120732ed7a031199b68e9a";
 
 export async function fetchAPI<T>(
   path: string,
@@ -69,10 +77,12 @@ export async function fetchAPI<T>(
 
 export async function getGlobalSettings(): Promise<Global> {
   try {
-    const res = await fetchAPI<StrapiSingleResponse<Global>>("/global", {
+    const res = await fetchAPI<StrapiResponse<Global>>("/global", {
       populate: "*",
     }, { next: { revalidate: 60 } });
-    return res.data?.attributes || mockGlobal;
+    // Handle flattened or nested
+    const data = res.data as StrapiItem<Global> | null;
+    return data?.attributes || data || mockGlobal;
   } catch (e) {
     console.warn("Failed to fetch global settings, falling back to mock.", e);
     return mockGlobal;
@@ -85,7 +95,9 @@ export async function getTours(): Promise<Tour[]> {
       populate: "*",
     }, { next: { revalidate: 60 } });
     // Strapi response data is an array of objects with id and attributes
-    return res.data.map((item) => item.attributes);
+    // Or just the objects if flattened
+    if (!res.data || !Array.isArray(res.data)) return mockTours;
+    return res.data.map((item) => item.attributes || item);
   } catch (e) {
     console.warn("Failed to fetch tours, falling back to mock.", e);
     return mockTours;
@@ -98,7 +110,10 @@ export async function getTourBySlug(slug: string): Promise<Tour | null> {
       "filters[slug][$eq]": slug,
       populate: "*",
     }, { next: { revalidate: 60 } });
-    return res.data[0]?.attributes || null;
+
+    if (!res.data || !Array.isArray(res.data)) return null;
+    const item = res.data[0];
+    return item?.attributes || item || null;
   } catch (e) {
     console.warn("Failed to fetch tour by slug, falling back to mock.", e);
     return mockTours.find((t) => t.slug === slug) || null;
